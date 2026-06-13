@@ -1,0 +1,33 @@
+<%- include('../partials/header', { title: 'Faculty Directory' }) %>
+
+<main>
+    <h1>Faculty Directory</h1>
+
+    <p>
+        Browse our instructors and click on any instructor to see detailed
+        information including their department and title.
+    </p>
+
+    <div class="sort-links">
+        <p><strong>Sort By:</strong></p>
+        <a href="/faculty/?sort=name">Name</a> |
+        <a href="/faculty/?sort=department">Department</a> |
+        <a href="/faculty/?sort=title">Title</a>
+    </div>
+
+    <div class="faculty-list">
+        <% faculty.forEach(instructor => { %>
+            <div class="faculty-card">
+                <h3>
+                    <a href="/faculty/<%= instructor.slug %>">
+                        <%= instructor.name %>
+                    </a>
+                </h3>
+                <p class="faculty-title"><strong>Title:</strong> <%= instructor.title %></p>
+                <p class="faculty-department"><strong>Department:</strong> <%= instructor.department %></p>
+            </div>
+        <% }); %>
+    </div>
+</main>
+
+<%- include('../partials/footer') %>
