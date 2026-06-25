@@ -3,6 +3,7 @@ import { homePage, aboutPage } from './index.js';
 
 const router = Router();
 
+// routes for static pages (Home and About pages)
 router.get('/', homePage);
 router.get('/about', aboutPage);
 
