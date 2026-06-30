@@ -1,0 +1,39 @@
+<%- include('../partials/header') %>
+    <main>
+        <div class="product-detail">
+            <div class="product-detail-image">
+                <% if (product.imageUrl) { %>
+                    <img src="<%= product.imageUrl %>" alt="<%= product.productName %>">
+                    <% } else { %>
+                        <img src="/images/placeholder.jpg" alt="<%= product.productName %>">
+                        <% } %>
+            </div>
+
+            <div class="product-detail-info">
+                <h1>
+                    <%= product.productName %>
+                </h1>
+                <p class="product-detail-price">$<%= product.price %>
+                </p>
+
+                <p class="product-detail-meta">
+                    <%= product.color %>
+                        <% if (product.size) { %> · <%= product.size %>
+                                <% } %>
+                </p>
+
+                <p class="product-detail-description">
+                    <%= product.description %>
+                </p>
+
+                <% if (product.stockQuantity> 0) { %>
+                    <p class="in-stock">In stock</p>
+                    <% } else { %>
+                        <p class="out-of-stock">Out of stock</p>
+                        <% } %>
+
+                            <a href="/products" class="btn btn-outline">← Back to all products</a>
+            </div>
+        </div>
+    </main>
+    <%- include('../partials/footer') %>

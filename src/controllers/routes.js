@@ -11,7 +11,7 @@ router.get('/about', aboutPage);
 // routes for products
 router.get('/products', productsPage);
 router.get('/products/:type', productsByType);
-router.get('/products/:type/:id', productDetail);
+router.get('/products/detail/:id', productDetail);
 
 // 404 catch-all
 router.use((req, res, next) => {
