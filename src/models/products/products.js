@@ -7,10 +7,11 @@ import db from '../db.js';
  */
 const getAllProducts = async () => {
     const query = `
-        SELECT id, product_name, price, product_type, description, 
-               stock_quantity, size, color, image_url, created_at
-        FROM products
-        ORDER BY product_type, color, size
+        SELECT p.id, p.product_name, p.price, p.category_id, c.name AS category_name,
+               p.description, p.stock_quantity, p.size, p.color, p.image_url, p.created_at
+        FROM products p
+        LEFT JOIN categories c ON p.category_id = c.id
+        ORDER BY c.name, p.color, p.size
     `;
 
     const result = await db.query(query);
@@ -18,7 +19,8 @@ const getAllProducts = async () => {
         id: product.id,
         productName: product.product_name,
         price: product.price,
-        productType: product.product_type,
+        categoryId: product.category_id,
+        categoryName: product.category_name,
         description: product.description,
         stockQuantity: product.stock_quantity,
         size: product.size,
@@ -29,24 +31,25 @@ const getAllProducts = async () => {
 };
 
 /**
- * Core function that gets all products of a specific type.
+ * Core function that gets all products of a specific category.
  * 
- * @param {string|number} identifier - Product type ID or name
+ * @param {string|number} identifier - Category ID or name
  * @param {string} identifierType - 'id' or 'name' (default: 'name')
  * @param {string} sortBy - Sort option: 'color', 'size', or 'price' (default: 'color')
  * @returns {Promise<Array>} Array of product objects
  */
 const getProductsByType = async (identifier, identifierType = 'name', sortBy = 'color') => {
-    const whereClause = identifierType === 'id' ? 'id = $1' : 'product_type = $1';
+    const whereClause = identifierType === 'id' ? 'p.category_id = $1' : 'c.name = $1';
 
-    const orderByClause = sortBy === 'size' ? 'size' :
-                          sortBy === 'price' ? 'price' :
-                          'color';
+    const orderByClause = sortBy === 'size' ? 'p.size' :
+                          sortBy === 'price' ? 'p.price' :
+                          'p.color';
 
     const query = `
-        SELECT id, product_name, price, product_type, description,
-               stock_quantity, size, color, image_url, created_at
-        FROM products
+        SELECT p.id, p.product_name, p.price, p.category_id, c.name AS category_name,
+               p.description, p.stock_quantity, p.size, p.color, p.image_url, p.created_at
+        FROM products p
+        LEFT JOIN categories c ON p.category_id = c.id
         WHERE ${whereClause}
         ORDER BY ${orderByClause}
     `;
@@ -56,7 +59,8 @@ const getProductsByType = async (identifier, identifierType = 'name', sortBy = '
         id: product.id,
         productName: product.product_name,
         price: product.price,
-        productType: product.product_type,
+        categoryId: product.category_id,
+        categoryName: product.category_name,
         description: product.description,
         stockQuantity: product.stock_quantity,
         size: product.size,
@@ -74,10 +78,11 @@ const getProductsByType = async (identifier, identifierType = 'name', sortBy = '
  */
 const getProductById = async (id) => {
     const query = `
-        SELECT id, product_name, price, product_type, description,
-               stock_quantity, size, color, image_url, created_at
-        FROM products
-        WHERE id = $1
+        SELECT p.id, p.product_name, p.price, p.category_id, c.name AS category_name,
+               p.description, p.stock_quantity, p.size, p.color, p.image_url, p.created_at
+        FROM products p
+        LEFT JOIN categories c ON p.category_id = c.id
+        WHERE p.id = $1
     `;
 
     const result = await db.query(query, [id]);
@@ -91,7 +96,8 @@ const getProductById = async (id) => {
         id: product.id,
         productName: product.product_name,
         price: product.price,
-        productType: product.product_type,
+        categoryId: product.category_id,
+        categoryName: product.category_name,
         description: product.description,
         stockQuantity: product.stock_quantity,
         size: product.size,
@@ -99,6 +105,25 @@ const getProductById = async (id) => {
         imageUrl: product.image_url,
         createdAt: product.created_at
     };
+};
+
+/**
+ * Gets product names and stock quantities for the staff/admin dashboard.
+ * 
+ * @returns {Promise<Array>} Array of objects with id, productName, stockQuantity
+ */
+const getProductQuantities = async () => {
+    const query = `
+        SELECT id, product_name, stock_quantity
+        FROM products
+        ORDER BY product_name
+    `;
+    const result = await db.query(query);
+    return result.rows.map(product => ({
+        id: product.id,
+        productName: product.product_name,
+        stockQuantity: product.stock_quantity
+    }));
 };
 
 /**
@@ -115,5 +140,6 @@ export {
     getAllProducts,
     getProductsByTypeId,
     getProductsByTypeName,
-    getProductById
+    getProductById,
+    getProductQuantities
 };

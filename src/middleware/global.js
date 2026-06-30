@@ -71,6 +71,16 @@ const addLocalVariables = (req, res, next) => {
         res.locals.isLoggedIn = true;
     }
 
+    // Make the current user available to all templates (e.g. nav, header)
+    res.locals.user = req.session && req.session.user ? req.session.user : null;
+
+    // Make flash messages available to all templates
+    res.locals.messages = {
+        error: req.flash('error'),
+        success: req.flash('success'),
+        warning: req.flash('warning')
+    };
+
     // Continue to the next middleware or route handler
     next();
 };

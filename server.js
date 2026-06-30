@@ -3,6 +3,7 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import session from 'express-session';
+import flash from 'connect-flash';
 
 // Import MVC components
 import routes from './src/controllers/routes.js';
@@ -26,6 +27,9 @@ app.use(session({
         maxAge: 24 * 60 * 60 * 1000
     }
 }));
+
+// Flash messages (must come after session, since flash depends on it)
+app.use(flash());
 
 // Configure Express
 app.use(express.static(path.join(__dirname, 'public')));

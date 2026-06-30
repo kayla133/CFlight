@@ -1,0 +1,60 @@
+<%- include('partials/header') %>
+<main>
+    <div class="dashboard-header">
+        <h1>Welcome, <%= user.name %></h1>
+        <p class="dashboard-role">Role: <%= user.roleName %></p>
+    </div>
+
+    <!-- Standard user content -->
+    <section class="dashboard-section">
+        <h2>Your Account</h2>
+        <p>Email: <%= user.email %></p>
+        <a href="/register/<%= user.id %>/edit" class="btn btn-outline">Edit Account</a>
+    </section>
+
+    <!-- Staff content: employee + admin -->
+    <% if (isStaff) { %>
+        <section class="dashboard-section">
+            <h2>Product Inventory</h2>
+            <% if (productQuantities.length === 0) { %>
+                <p>No products found.</p>
+            <% } else { %>
+                <table class="dashboard-table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Stock Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% productQuantities.forEach(product => { %>
+                            <tr>
+                                <td><%= product.productName %></td>
+                                <td>
+                                    <%= product.stockQuantity %>
+                                    <% if (product.stockQuantity === 0) { %>
+                                        <span class="out-of-stock">Out of stock</span>
+                                    <% } %>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            <% } %>
+        </section>
+
+        <section class="dashboard-section">
+            <h2>Manage Users</h2>
+            <a href="/register/list" class="btn btn-outline">View All Users</a>
+        </section>
+    <% } %>
+
+    <!-- Admin-only content -->
+    <% if (isAdmin) { %>
+        <section class="dashboard-section">
+            <h2>Admin Tools</h2>
+            <p>As an admin, you can delete users and products from their respective management pages.</p>
+        </section>
+    <% } %>
+</main>
+<%- include('partials/footer') %>
