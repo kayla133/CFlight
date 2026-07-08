@@ -4,6 +4,7 @@ import { productsPage, productsByType, productDetail } from './products/products
 import registrationRoutes from './forms/registration.js';
 import loginRoutes, { processLogout, showDashboard } from './forms/login.js';
 import { requireLogin } from '../middleware/auth.js';
+import contactRoutes from './forms/contact.js';
 
 const router = Router();
 
@@ -13,14 +14,23 @@ router.get('/about', aboutPage);
 
 // routes for products
 router.get('/products', productsPage);
-router.get('/products/:type', productsByType);
 router.get('/products/detail/:id', productDetail);
+router.get('/products/:type', productsByType);
+
 
 // auth routes
 router.use('/register', registrationRoutes);
 router.use('/login', loginRoutes);
 router.get('/dashboard', requireLogin, showDashboard);
 router.post('/logout', requireLogin, processLogout);
+
+// contact routes
+router.use('/contact', (req, res, next) => {
+    res.addStyle('<link rel="stylesheet" href="/css/contact.css">');
+    next();
+});
+router.use('/contact', contactRoutes);
+
 
 // 404 catch-all (must stay last)
 router.use((req, res, next) => {

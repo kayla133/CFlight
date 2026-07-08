@@ -1,0 +1,28 @@
+<%- include('../../partials/header') %>
+<main>
+    <div class="responses-header">
+        <h1>Contact Form Submissions</h1>
+        <span class="responses-count">
+            <%= contactForms.length %> <%= contactForms.length === 1 ? 'submission' : 'submissions' %>
+        </span>
+    </div>
+
+    <% if (contactForms && contactForms.length > 0) { %>
+        <div class="contact-responses">
+            <% contactForms.forEach(form => { %>
+                <div class="response-item">
+                    <h3 class="response-subject"><%= form.subject %></h3>
+                    <p class="response-sender">
+                        From: <strong><%= form.name %></strong> &mdash;
+                        <a href="mailto:<%= form.email %>"><%= form.email %></a>
+                    </p>
+                    <p class="response-message"><%= form.message %></p>
+                    <p class="response-date">Submitted: <%= new Date(form.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></p>
+                </div>
+            <% }); %>
+        </div>
+    <% } else { %>
+        <p class="no-responses">No contact form submissions yet.</p>
+    <% } %>
+</main>
+<%- include('../../partials/footer') %>

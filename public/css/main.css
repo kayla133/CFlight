@@ -54,6 +54,12 @@ a {
     text-decoration: none;
 }
 
+h1 {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--gray-100);
+}
+
 /* --- Navigation ------------------------------------------- */
 header {
     position: sticky;
@@ -423,6 +429,29 @@ footer p {
 }
 
 /* --- Products List Page ------------------------------------ */
+/* --- Products Page Header ---------------------------------- */
+.products-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--gray-100);
+}
+
+.products-header h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: normal;
+    color: var(--navy);
+    letter-spacing: 0.03em;
+    margin-bottom: 0.25rem;
+}
+
+.products-header p {
+    font-family: 'Arial', sans-serif;
+    font-size: 0.9rem;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));

@@ -45,10 +45,10 @@ app.use(addLocalVariables);
 // Routes
 app.use('/', routes);
 
-// 404 handler
+// 400 handler
 app.use((req, res, next) => {
     const err = new Error('Page Not Found');
-    err.status = 404;
+    err.status = 400;
     next(err);
 });
 
@@ -59,12 +59,12 @@ app.use((err, req, res, next) => {
     if (res.headersSent || res.finished) return next(err);
 
     const status = err.status || 500;
-    const template = status === 404 ? '404' : '500';
+    const template = status === 400 ? '400' : '500';
 
     res.locals.isLoggedIn = req.session?.user ? true : false;
 
     const context = {
-        title: status === 404 ? 'Page Not Found' : 'Server Error',
+        title: status === 400 ? 'Page Not Found' : 'Server Error',
         error: NODE_ENV === 'production' ? 'An error occurred' : err.message,
         stack: NODE_ENV === 'production' ? null : err.stack,
         NODE_ENV,
