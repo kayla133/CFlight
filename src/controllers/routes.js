@@ -13,6 +13,11 @@ router.get('/', homePage);
 router.get('/about', aboutPage);
 
 // routes for products
+// product routes
+router.use('/products', (req, res, next) => {
+    res.addStyle('<link rel="stylesheet" href="/css/products.css">');
+    next();
+});
 router.get('/products', productsPage);
 router.get('/products/detail/:id', productDetail);
 router.get('/products/:type', productsByType);

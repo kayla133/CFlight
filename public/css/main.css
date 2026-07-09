@@ -54,10 +54,16 @@ a {
     text-decoration: none;
 }
 
+/* --- Global Page Header (matches product pages) ------------ */
 h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: normal;
+    color: var(--navy);
+    letter-spacing: 0.03em;
     margin-bottom: 2rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--gray-100);
+    font-family: 'Georgia', serif; /* keep your brand serif */
 }
 
 /* --- Navigation ------------------------------------------- */
@@ -67,7 +73,7 @@ header {
     z-index: 100;
     background: var(--navy);
     height: var(--nav-height);
-    border-bottom: 2px solid var(--gold);
+    border-bottom: 2px solid var(--gold); /* matches product header outline */
 }
 
 header nav {
@@ -90,7 +96,7 @@ header nav ul {
 header nav ul li a {
     display: block;
     padding: 0.5rem 1rem;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Arial', sans-serif; /* matches product page font */
     font-size: 0.875rem;
     font-weight: 600;
     letter-spacing: 0.06em;
@@ -108,6 +114,7 @@ header nav ul li a:hover {
 header nav ul li a.active {
     color: var(--gold);
 }
+
 
 /* Logout button styled to match nav links (it's a <form><button> for CSRF safety, not an <a>) */
 header nav ul li .link-button {
@@ -412,6 +419,329 @@ main {
     background: var(--gold-light);
     border-color: var(--gold-light);
 }
+
+/* ============================================================
+   Auth Forms (Login / Register)
+   Matches contact form styling + product page typography
+   ============================================================ */
+
+.auth-form {
+    max-width: 420px;
+    margin: 0 auto;
+    background: var(--white);
+    border: 1px solid var(--gray-100);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    box-shadow: 0 2px 16px rgba(13, 31, 60, 0.06);
+}
+
+.auth-form h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: normal;
+    color: var(--navy);
+    letter-spacing: 0.03em;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--gray-100);
+}
+
+.auth-form .form-group {
+    margin-bottom: 1.25rem;
+}
+
+.auth-form label {
+    display: block;
+    font-family: 'Arial', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 0.4rem;
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 0.65rem 0.875rem;
+    font-family: 'Arial', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text-body);
+    background: var(--off-white);
+    border: 1.5px solid var(--gray-300);
+    border-radius: var(--radius);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+}
+
+.auth-form input:focus {
+    border-color: var(--navy);
+    box-shadow: 0 0 0 3px rgba(13, 31, 60, 0.08);
+    background: var(--white);
+}
+
+.auth-form button {
+    width: 100%;
+    margin-top: 0.75rem;
+    padding: 0.875rem;
+    font-size: 0.875rem;
+    background: var(--navy);
+    color: var(--white);
+    border: 2px solid var(--navy);
+    border-radius: var(--radius);
+    font-family: 'Arial', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.auth-form button:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--navy);
+}
+
+.auth-form a {
+    display: block;
+    margin-top: 1rem;
+    font-family: 'Arial', sans-serif;
+    font-size: 0.85rem;
+    color: var(--navy);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-align: center;
+}
+
+.auth-form a:hover {
+    color: var(--gold);
+}
+
+/* ============================================================
+   Registration Form
+   Extends auth-form styling with extra fields + help text
+   ============================================================ */
+
+.registration-form {
+    max-width: 480px;
+    margin: 0 auto;
+    background: var(--white);
+    border: 1px solid var(--gray-100);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    box-shadow: 0 2px 16px rgba(13, 31, 60, 0.06);
+}
+
+.registration-form h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: normal;
+    color: var(--navy);
+    letter-spacing: 0.03em;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--gray-100);
+}
+
+.registration-form p {
+    font-family: 'Arial', sans-serif;
+    font-size: 0.95rem;
+    color: var(--gray-500);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+.registration-form .form-group {
+    margin-bottom: 1.25rem;
+}
+
+.registration-form label {
+    display: block;
+    font-family: 'Arial', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 0.4rem;
+}
+
+.registration-form input {
+    width: 100%;
+    padding: 0.65rem 0.875rem;
+    font-family: 'Arial', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text-body);
+    background: var(--off-white);
+    border: 1.5px solid var(--gray-300);
+    border-radius: var(--radius);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+}
+
+.registration-form input:focus {
+    border-color: var(--navy);
+    box-shadow: 0 0 0 3px rgba(13, 31, 60, 0.08);
+    background: var(--white);
+}
+
+.registration-form .help-text {
+    font-family: 'Arial', sans-serif;
+    font-size: 0.75rem;
+    color: var(--gray-500);
+    margin-top: 0.35rem;
+    line-height: 1.4;
+}
+
+.registration-form button {
+    width: 100%;
+    margin-top: 0.75rem;
+    padding: 0.875rem;
+    font-size: 0.875rem;
+    background: var(--navy);
+    color: var(--white);
+    border: 2px solid var(--navy);
+    border-radius: var(--radius);
+    font-family: 'Arial', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.registration-form button:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--navy);
+}
+
+/* ============================================================
+   User List / Admin User Management
+   Matches product-card + contact-card aesthetic
+   ============================================================ */
+
+.users-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.user-card {
+    background: var(--white);
+    border: 1px solid var(--gray-100);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    box-shadow: 0 2px 12px rgba(13, 31, 60, 0.06);
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+
+.user-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 4px 16px rgba(13, 31, 60, 0.08);
+    transform: translateY(-2px);
+}
+
+/* Header: Name + ID */
+.user-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1rem;
+}
+
+.user-header h3 {
+    font-size: 1.1rem;
+    font-weight: normal;
+    color: var(--navy);
+    letter-spacing: 0.03em;
+}
+
+.user-id {
+    font-family: 'Arial', sans-serif;
+    font-size: 0.75rem;
+    color: var(--gray-500);
+    letter-spacing: 0.04em;
+}
+
+/* Details section */
+.user-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.detail-item .label {
+    font-family: 'Arial', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--navy);
+    margin-bottom: 0.15rem;
+}
+
+.detail-item .value {
+    font-family: 'Arial', sans-serif;
+    font-size: 0.9rem;
+    color: var(--gray-800);
+}
+
+/* Actions */
+.user-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.user-actions a,
+.user-actions button {
+    padding: 0.5rem 1rem;
+    font-family: 'Arial', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+/* Edit link */
+.user-actions a {
+    background: var(--navy);
+    color: var(--white);
+    border: 2px solid var(--navy);
+}
+
+.user-actions a:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--navy);
+}
+
+/* Delete button */
+.user-actions button {
+    background: #A32D2D;
+    color: var(--white);
+    border: 2px solid #A32D2D;
+}
+
+.user-actions button:hover {
+    background: #E24B4A;
+    border-color: #E24B4A;
+}
+
+/* Empty state */
+.no-users {
+    font-family: 'Arial', sans-serif;
+    font-size: 1rem;
+    color: var(--gray-500);
+    text-align: center;
+    padding: 4rem 0;
+}
+
 
 /* --- Footer ----------------------------------------------- */
 footer {
