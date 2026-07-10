@@ -19,6 +19,9 @@
                 <li><a href="/products">Products</a></li>
                 <li><a href="/contact">Contact</a></li>
                 <% if (isLoggedIn) { %>
+                    <li>
+                        <a href="/cart">Cart<% if (cartCount > 0) { %> (<%= cartCount %>)<% } %></a>
+                    </li>
                     <li><a href="/dashboard">Dashboard</a></li>
                     <% if (user && (user.roleName === 'employee' || user.roleName === 'admin')) { %>
                         <li><a href="/register/list">All Users</a></li>

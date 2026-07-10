@@ -5,6 +5,7 @@ import registrationRoutes from './forms/registration.js';
 import loginRoutes, { processLogout, showDashboard } from './forms/login.js';
 import { requireLogin } from '../middleware/auth.js';
 import contactRoutes from './forms/contact.js';
+import cartRoutes from './cart/cart.js';
 
 const router = Router();
 
@@ -35,6 +36,14 @@ router.use('/contact', (req, res, next) => {
     next();
 });
 router.use('/contact', contactRoutes);
+
+// cart routes
+router.use('/cart', (req, res, next) => {
+    res.addStyle('<link rel="stylesheet" href="/css/cart.css">');
+    next();
+});
+router.use('/cart', cartRoutes);
+router.use('/cart', cartRoutes);
 
 
 // 404 catch-all (must stay last)

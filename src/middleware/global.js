@@ -1,3 +1,5 @@
+import { getCartItemCount } from '../models/cart/cart.js';
+
 /**
  * Helper function to get the current greeting based on the time of day.
  */
@@ -42,7 +44,7 @@ const setHeadAssetsFunctionality = (res) => {
  * Middleware to add local variables to res.locals for use in all templates.
  * Templates can access these values but are not required to use them.
  */
-const addLocalVariables = (req, res, next) => {
+const addLocalVariables = async (req, res, next) => {
     // 1. ADD THIS LINE RIGHT HERE TO FIX THE UNDEFINED ERROR PERMANENTLY:
     res.locals.title = '';
 
@@ -73,6 +75,16 @@ const addLocalVariables = (req, res, next) => {
 
     // Make the current user available to all templates (e.g. nav, header)
     res.locals.user = req.session && req.session.user ? req.session.user : null;
+
+    // Make the cart item count available to all templates (e.g. nav badge)
+    res.locals.cartCount = 0;
+    if (req.session && req.session.user) {
+        try {
+            res.locals.cartCount = await getCartItemCount(req.session.user.id);
+        } catch (error) {
+            console.error('Error fetching cart count:', error);
+        }
+    }
 
     // Make flash messages available to all templates
     res.locals.messages = {
