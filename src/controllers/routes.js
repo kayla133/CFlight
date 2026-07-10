@@ -6,6 +6,7 @@ import loginRoutes, { processLogout, showDashboard } from './forms/login.js';
 import { requireLogin } from '../middleware/auth.js';
 import contactRoutes from './forms/contact.js';
 import cartRoutes from './cart/cart.js';
+import checkoutRoutes from './checkout/checkout.js';
 
 const router = Router();
 
@@ -43,7 +44,13 @@ router.use('/cart', (req, res, next) => {
     next();
 });
 router.use('/cart', cartRoutes);
-router.use('/cart', cartRoutes);
+
+// checkout routes
+router.use('/checkout', (req, res, next) => {
+    res.addStyle('<link rel="stylesheet" href="/css/checkout.css">');
+    next();
+});
+router.use('/checkout', checkoutRoutes);
 
 
 // 404 catch-all (must stay last)

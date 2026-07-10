@@ -1,0 +1,35 @@
+<%- include('../partials/header') %>
+
+<main>
+    <h1><%= title %></h1>
+
+    <p class="confirmation-message">Thank you, <%= shipping.full_name %>! Your order has been placed.</p>
+
+    <section class="checkout-summary">
+        <h2>Order Summary</h2>
+        <ul class="checkout-items">
+            <% cartItems.forEach(item => { %>
+                <li>
+                    <span><%= item.product_name %> (<%= item.size %>, <%= item.color %>) × <%= item.quantity %></span>
+                    <span>$<%= (item.price * item.quantity).toFixed(2) %></span>
+                </li>
+            <% }) %>
+        </ul>
+        <div class="checkout-total">
+            <strong>Total: $<%= total.toFixed(2) %></strong>
+        </div>
+    </section>
+
+    <section class="checkout-shipping-summary">
+        <h2>Shipping To</h2>
+        <p>
+            <%= shipping.full_name %><br>
+            <%= shipping.address %><br>
+            <%= shipping.city %>, <%= shipping.state %> <%= shipping.zip_code %>
+        </p>
+    </section>
+
+    <a href="/products" class="btn btn-primary">Continue Shopping</a>
+</main>
+
+<%- include('../partials/footer') %>
