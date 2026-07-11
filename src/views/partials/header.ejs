@@ -23,10 +23,11 @@
                         <a href="/cart">Cart<% if (cartCount > 0) { %> (<%= cartCount %>)<% } %></a>
                     </li>
                     <li><a href="/dashboard">Dashboard</a></li>
+                    <li><a href="/contact/mine">My Contacts</a></li>
                     <% if (user && (user.roleName === 'employee' || user.roleName === 'admin')) { %>
                         <li><a href="/register/list">All Users</a></li>
+                        <li><a href="/contact/responses">Contact Responses</a></li>
                     <% } %>
-                    <li><a href="/contact/responses">Contact Responses</a></li>
                     <li>
                         <form action="/logout" method="POST" style="display: inline;">
                             <button type="submit" class="link-button">Logout</button>

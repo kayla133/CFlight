@@ -10,14 +10,44 @@
     <% if (contactForms && contactForms.length > 0) { %>
         <div class="contact-responses">
             <% contactForms.forEach(form => { %>
-                <div class="response-item">
-                    <h3 class="response-subject"><%= form.subject %></h3>
+                <div class="response-item status-<%= form.status %>">
+                    <div class="response-item-header">
+                        <h3 class="response-subject"><%= form.subject %></h3>
+                        <span class="status-badge status-<%= form.status %>"><%= form.status %></span>
+                    </div>
                     <p class="response-sender">
                         From: <strong><%= form.name %></strong> &mdash;
                         <a href="mailto:<%= form.email %>"><%= form.email %></a>
                     </p>
                     <p class="response-message"><%= form.message %></p>
                     <p class="response-date">Submitted: <%= new Date(form.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></p>
+
+                    <% if (form.response) { %>
+                        <div class="staff-response">
+                            <strong>Staff response:</strong>
+                            <p><%= form.response %></p>
+                        </div>
+                    <% } %>
+
+                    <form method="POST" action="/contact/responses/<%= form.id %>" class="respond-form">
+                        <label for="response-<%= form.id %>">Response</label>
+                        <textarea id="response-<%= form.id %>" name="response" rows="3"><%= form.response || '' %></textarea>
+
+                        <label for="status-<%= form.id %>">Status</label>
+                        <select id="status-<%= form.id %>" name="status">
+                            <option value="received" <%= form.status === 'received' ? 'selected' : '' %>>Received</option>
+                            <option value="replied" <%= form.status === 'replied' ? 'selected' : '' %>>Replied</option>
+                            <option value="closed" <%= form.status === 'closed' ? 'selected' : '' %>>Closed</option>
+                        </select>
+
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+
+                    <% if (user && user.roleName === 'admin') { %>
+                        <form method="POST" action="/contact/responses/<%= form.id %>/delete" class="delete-form" onsubmit="return confirm('Delete this contact submission?');">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    <% } %>
                 </div>
             <% }); %>
         </div>
