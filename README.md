@@ -15,21 +15,20 @@ C Flight is built for recreational golfers who don't take the game (or themselve
 ## 2. Database Schema
 
 **Entity Relationship Diagram (ERD)**
-This feature will be added shortly.
+<img width="407" height="845" alt="image" src="https://github.com/user-attachments/assets/661a7205-cb27-4ea0-84d7-ddeba57e49b7" />
+
 
 ---
 
 ## 3. User Roles
 
-### Role 1: Owner (Admin)
+### Role 1: Admin
 
 The Owner has full control over the entire application.
 
-- Can add, edit, and delete products and product categories
+- Can add, edit, and delete products
 - Can view and manage all user accounts and assign/change roles
-- Can view all orders and update order statuses at any stage
-- Can view and manage all customer reviews (edit or delete)
-- Can view all contact/support messages
+- Can view, delete, and respond all contact/support messages
 - Has access to the full admin dashboard
 
 ---
@@ -38,12 +37,8 @@ The Owner has full control over the entire application.
 
 Employees assist with day-to-day store operations.
 
-- Can edit existing product details (price, description, stock, availability)
-- Can view all orders and update order status (Placed → Processing → Shipped → Fulfilled)
-- Can add notes to orders
-- Can moderate customer reviews (delete inappropriate content)
-- Can view contact/support messages
-- Cannot add or delete products or categories
+- Can edit existing product details
+- Can view and respond contact/support messages
 - Cannot manage user accounts or roles
 
 ---
@@ -54,9 +49,7 @@ Standard registered users who shop on the site.
 
 - Can browse and view all products
 - Can add items to cart and complete checkout
-- Can view their own order history and current order status
-- Can leave, edit, and delete their own product reviews
-- Can submit contact/support messages
+- Can submit, edit, and delete contact/support messages
 - Cannot access any admin or employee dashboards
 
 ---
@@ -66,18 +59,22 @@ Standard registered users who shop on the site.
 
 | Role       | Username / Email                  |
 |------------|-----------------------------------|
-| Owner      | `owner@cflight.com`               |
-| Employee   | `employee@cflight.com`            |
-| Customer   | `customer@cflight.com`            |
+| Admin      | `admin@example.com`               |
+| Employee   | `employee@example.com`            |
+| Customer   | `customer@example.com`            |
 
 ---
 
 ## 5. Known Limitations
 
-<!-- Fill this in as you build. Be honest — this shows self-awareness and good engineering practice. -->
-
-- [ ] _No limitations identified yet — project is in early development._
-
+- No way of tracking orders
+- No product to sell at the moment
+- Checkout is a mock flow with no payment processes
+- Cart is logged-in only
+- No product reviews system yet
+- No email notifications
+- Images need to be updated when actually products are built
+- No admin UI for adding products
 ---
 
 _Last updated: June 2026_
