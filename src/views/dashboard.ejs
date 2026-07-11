@@ -24,6 +24,7 @@
                         <tr>
                             <th>Product</th>
                             <th>Stock Quantity</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,6 +35,17 @@
                                     <%= product.stockQuantity %>
                                     <% if (product.stockQuantity === 0) { %>
                                         <span class="out-of-stock">Out of stock</span>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <form method="POST" action="/products/<%= product.id %>/stock" class="stock-update-form">
+                                        <input type="number" name="stock_quantity" value="<%= product.stockQuantity %>" min="0">
+                                        <button type="submit" class="btn btn-outline">Update</button>
+                                    </form>
+                                    <% if (isAdmin) { %>
+                                        <form method="POST" action="/products/<%= product.id %>/delete" onsubmit="return confirm('Delete this product? This cannot be undone.');">
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
                                     <% } %>
                                 </td>
                             </tr>

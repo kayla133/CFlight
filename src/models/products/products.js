@@ -127,6 +127,38 @@ const getProductQuantities = async () => {
 };
 
 /**
+ * Updates a product's stock quantity.
+ * Used by staff/admin from the dashboard.
+ *
+ * @param {number} id - Product id
+ * @param {number} stockQuantity - New stock quantity
+ * @returns {Promise<Object|null>} The updated product, or null if not found
+ */
+const updateStockQuantity = async (id, stockQuantity) => {
+    const query = `
+        UPDATE products
+        SET stock_quantity = $2
+        WHERE id = $1
+        RETURNING id, product_name, stock_quantity
+    `;
+    const result = await db.query(query, [id, stockQuantity]);
+    return result.rows[0] || null;
+};
+
+/**
+ * Deletes a product entirely.
+ * Admin only - enforced in the controller.
+ *
+ * @param {number} id - Product id
+ * @returns {Promise<Object|null>} The deleted product, or null if not found
+ */
+const deleteProduct = async (id) => {
+    const query = `DELETE FROM products WHERE id = $1 RETURNING *`;
+    const result = await db.query(query, [id]);
+    return result.rows[0] || null;
+};
+
+/**
  * Wrapper functions for querying by id or name.
  * Example: getProductsByTypeId(1) calls getProductsByType(1, 'id')
  */
@@ -141,5 +173,7 @@ export {
     getProductsByTypeId,
     getProductsByTypeName,
     getProductById,
-    getProductQuantities
+    getProductQuantities,
+    updateStockQuantity,
+    deleteProduct
 };

@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import { homePage, aboutPage } from './index.js';
-import { productsPage, productsByType, productDetail } from './products/products.js';
+import { productsPage, productsByType, productDetail, updateStock, deleteProductHandler } from './products/products.js';
 import registrationRoutes from './forms/registration.js';
 import loginRoutes, { processLogout, showDashboard } from './forms/login.js';
-import { requireLogin } from '../middleware/auth.js';
+import { requireLogin, requireStaff, requireAdmin } from '../middleware/auth.js';
 import contactRoutes from './forms/contact.js';
 import cartRoutes from './cart/cart.js';
 import checkoutRoutes from './checkout/checkout.js';
@@ -23,6 +23,8 @@ router.use('/products', (req, res, next) => {
 router.get('/products', productsPage);
 router.get('/products/detail/:id', productDetail);
 router.get('/products/:type', productsByType);
+router.post('/products/:id/stock', requireStaff, updateStock);
+router.post('/products/:id/delete', requireAdmin, deleteProductHandler);
 
 
 // auth routes
