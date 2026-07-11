@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { body, validationResult } from 'express-validator';
 import bcrypt from 'bcrypt';
-import { emailExists, saveUser, getAllUsers, getUserById, updateUser, deleteUser } from '../../models/forms/registration.js';
+import { emailExists, saveUser, getAllUsers, getUserById, updateUser, deleteUser, updateUserRole } from '../../models/forms/registration.js';
 import { requireLogin, requireStaff, requireAdmin } from '../../middleware/auth.js';
 const router = Router();
 
@@ -203,11 +203,47 @@ const processDeleteAccount = async (req, res) => {
     res.redirect('/register/list');
 };
 
+/**
+ * Admin only: change a user's role.
+ * A role_id of 1/2/3 corresponds to admin/employee/customer.
+ */
+const processRoleChange = async (req, res) => {
+    const targetUserId = parseInt(req.params.id);
+    const currentUser = req.session.user;
+    const roleId = parseInt(req.body.role_id);
+
+    if (currentUser.id === targetUserId) {
+        req.flash('error', 'You cannot change your own role.');
+        return res.redirect('/register/list');
+    }
+
+    const validRoleIds = [1, 2, 3];
+    if (!validRoleIds.includes(roleId)) {
+        req.flash('error', 'Invalid role selected.');
+        return res.redirect('/register/list');
+    }
+
+    try {
+        const updated = await updateUserRole(targetUserId, roleId);
+        if (!updated) {
+            req.flash('error', 'User not found.');
+        } else {
+            req.flash('success', `Updated role for ${updated.name}.`);
+        }
+        res.redirect('/register/list');
+    } catch (error) {
+        console.error('Error updating user role:', error);
+        req.flash('error', 'Unable to update this user\'s role. Please try again.');
+        res.redirect('/register/list');
+    }
+};
+
 router.get('/', showRegistrationForm);
 router.post('/', registrationValidation, processRegistration);
 router.get('/list', requireStaff, showAllUsers);
 router.get('/:id/edit', requireLogin, showEditAccountForm);
 router.post('/:id/edit', requireLogin, editValidation, processEditAccount);
 router.post('/:id/delete', requireAdmin, processDeleteAccount);
+router.post('/:id/role', requireAdmin, processRoleChange);
 
 export default router;

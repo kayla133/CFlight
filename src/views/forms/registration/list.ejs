@@ -6,7 +6,8 @@
             <% users.forEach(listUser => { %>
                 <% const currentUser = typeof isLoggedIn !== 'undefined' && isLoggedIn ? user : null;
                 const canEdit = currentUser && (currentUser.id === listUser.id || currentUser.roleName === 'admin');
-                const canDelete = currentUser && currentUser.roleName === 'admin' && currentUser.id !== listUser.id; %>
+                const canDelete = currentUser && currentUser.roleName === 'admin' && currentUser.id !== listUser.id;
+                const canChangeRole = currentUser && currentUser.roleName === 'admin' && currentUser.id !== listUser.id; %>
                 <div class="user-card">
                     <div class="user-header">
                         <h3><%= listUser.name %></h3>
@@ -18,10 +19,27 @@
                             <div class="value"><%= listUser.email %></div>
                         </div>
                         <div class="detail-item">
+                            <div class="label">Role</div>
+                            <div class="value"><%= listUser.roleName %></div>
+                        </div>
+                        <div class="detail-item">
                             <div class="label">Registered</div>
                             <div class="value"><%= new Date(listUser.created_at).toLocaleDateString() %></div>
                         </div>
                     </div>
+
+                    <% if (canChangeRole) { %>
+                        <form method="POST" action="/register/<%= listUser.id %>/role" class="role-change-form">
+                            <label for="role-<%= listUser.id %>">Change Role</label>
+                            <select id="role-<%= listUser.id %>" name="role_id">
+                                <option value="1" <%= listUser.roleName === 'admin' ? 'selected' : '' %>>Admin</option>
+                                <option value="2" <%= listUser.roleName === 'employee' ? 'selected' : '' %>>Employee</option>
+                                <option value="3" <%= listUser.roleName === 'customer' ? 'selected' : '' %>>Customer</option>
+                            </select>
+                            <button type="submit" class="btn btn-outline">Update Role</button>
+                        </form>
+                    <% } %>
+
                     <% if (canEdit || canDelete) { %>
                         <div class="user-actions">
                             <% if (canEdit) { %>

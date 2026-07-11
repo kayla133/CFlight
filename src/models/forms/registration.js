@@ -87,4 +87,18 @@ const deleteUser = async (id) => {
     return result.rowCount > 0;
 };
 
-export { emailExists, saveUser, getAllUsers, getUserById, updateUser, deleteUser };
+/**
+ * Update a user's role (admin only, enforced in controller)
+ */
+const updateUserRole = async (id, roleId) => {
+    const query = `
+        UPDATE users
+        SET role_id = $1, updated_at = CURRENT_TIMESTAMP
+        WHERE id = $2
+        RETURNING id, name, role_id
+    `;
+    const result = await db.query(query, [roleId, id]);
+    return result.rows[0] || null;
+};
+
+export { emailExists, saveUser, getAllUsers, getUserById, updateUser, deleteUser, updateUserRole };
