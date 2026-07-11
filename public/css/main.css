@@ -160,6 +160,31 @@ header p {
     white-space: nowrap;
 }
 
+/* Hamburger toggle (mobile nav) — hidden checkbox + label, no JS needed */
+.nav-toggle {
+    display: none;
+}
+
+.nav-toggle-label {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    z-index: 101;
+}
+
+.nav-toggle-label span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: var(--white);
+    border-radius: 2px;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
 /* Flash messages */
 .flash-messages {
     max-width: var(--max-width);
@@ -900,20 +925,60 @@ footer p {
 }
 
 /* --- Responsive ------------------------------------------- */
-@media (max-width: 700px) {
+
+/* Collapse nav into a hamburger dropdown menu below this width,
+   since logged-in staff can have 8+ nav items that no longer fit in one row */
+@media (max-width: 1200px) {
+    header {
+        height: var(--nav-height);
+    }
+
     header nav {
-        padding: 0 1rem;
+        flex-wrap: wrap;
+        position: relative;
+    }
+
+    .nav-toggle-label {
+        display: flex;
     }
 
     header nav ul {
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
         gap: 0;
+        position: absolute;
+        top: var(--nav-height);
+        left: 0;
+        background: var(--navy);
+        border-bottom: 2px solid var(--gold);
+        padding: 0.5rem 0;
+        max-height: calc(100vh - var(--nav-height));
+        overflow-y: auto;
     }
 
-    header nav ul li a {
-        padding: 0.4rem 0.6rem;
-        font-size: 0.75rem;
+    .nav-toggle:checked ~ ul {
+        display: flex;
     }
 
+    header nav ul li {
+        width: 100%;
+    }
+
+    header nav ul li a,
+    header nav ul li .link-button {
+        padding: 0.85rem 1.5rem;
+        font-size: 0.85rem;
+        border-radius: 0;
+    }
+
+    header nav ul li:first-child a {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 700px) {
     main {
         padding: 2rem 1rem 4rem;
     }
